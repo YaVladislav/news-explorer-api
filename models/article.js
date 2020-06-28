@@ -48,4 +48,17 @@ const articleSchema = new mongoose.Schema({
   },
 });
 
+articleSchema.statics.findArticle = function (id, owner) {
+  return this.findById(id).select('+owner')
+    .orFail(new Error('Ресурс удален'))
+    .then((article) => {
+      if (JSON.stringify(article.owner) !== JSON.stringify(owner)) {
+        console.log(article.owner);
+        console.log(owner);
+        throw new Error('Недостаточно прав');
+      }
+      return (article);
+    });
+};
+
 module.exports = mongoose.model('article', articleSchema);
