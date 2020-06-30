@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const { PORT = 3000 } = process.env;
 const app = express();
 
@@ -17,19 +19,13 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(requestLogger);
+
 app.use(require('./routes'));
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).json({
-    message,
-    err,
-    // message: statusCode === 500
-    //   ? 'На сервере произошла ошибка'
-    //   : message,
-  });
-});
+app.use(errorLogger);
+
+app.use(require('./middlewares/error-handler'));
 
 app.listen(PORT, () => {
   console.log(`Приложение использует ${PORT} порт`);
