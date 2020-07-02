@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+
+const limiter = require('./middlewares/rate-limit');
 
 const errorHandler = require('./middlewares/error-handler');
 const errorCelebrate = require('./middlewares/error-celebrate');
@@ -17,6 +20,9 @@ mongoose.connect('mongodb://localhost:27017/newsdb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(limiter);
+app.use(helmet());
 
 app.use(cookieParser());
 app.use(bodyParser.json());
