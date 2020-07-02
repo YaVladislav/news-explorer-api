@@ -27,8 +27,10 @@ const createUser = (req, res, next) => {
       email: req.body.email,
       password: hash,
     }))
-    .then(() => {
-      res.status(201).json({ message: 'Пользователь успешно создан' });
+    .then((user) => {
+      const modifiedUser = JSON
+        .stringify(user, (key, value) => ((key === 'password') ? undefined : value));
+      res.status(201).json({ data: JSON.parse(modifiedUser) });
     })
     .catch(next);
 };
