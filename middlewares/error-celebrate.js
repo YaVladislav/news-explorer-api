@@ -1,5 +1,5 @@
 const { isCelebrate } = require('celebrate');
-const BadRequestErr = require('../errors/bad-request-err');
+const { BadRequestErr } = require('../constants');
 
 module.exports = (err, req, res, next) => {
   if (!isCelebrate(err)) {

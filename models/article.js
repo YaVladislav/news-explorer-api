@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const NotFoundError = require('../errors/not-found-err');
-const UnautorizedError = require('../errors/unauthorized-err');
+const { NotFoundError, UnautorizedError } = require('../constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -53,7 +52,7 @@ const articleSchema = new mongoose.Schema({
 
 articleSchema.statics.findArticle = function (id, owner) {
   return this.findById(id).select('+owner')
-    .orFail(new NotFoundError('Ресурс удален'))
+    .orFail(new NotFoundError('Ресурс не найден'))
     .then((article) => {
       if (JSON.stringify(article.owner) !== JSON.stringify(owner)) {
         console.log(article.owner);

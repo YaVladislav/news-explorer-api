@@ -2,7 +2,7 @@ const router = require('express').Router();
 const auth = require('../middlewares/auth');
 const { validateUserBody, validateAuthentication } = require('../middlewares/validation');
 
-const NotFoundError = require('../errors/not-found-err');
+const { NotFoundError } = require('../constants');
 
 const {
   login,

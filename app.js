@@ -4,17 +4,19 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
+const { PORT, DB_PATH } = require('./config');
+
 const limiter = require('./middlewares/rate-limit');
 
-const errorHandler = require('./middlewares/error-handler');
+const errorMongo = require('./middlewares/error-mongoose');
 const errorCelebrate = require('./middlewares/error-celebrate');
+const errorHandler = require('./middlewares/error-handler');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/newsdb', {
+mongoose.connect(DB_PATH, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -34,6 +36,7 @@ app.use(require('./routes'));
 
 app.use(errorLogger);
 
+app.use(errorMongo);
 app.use(errorCelebrate);
 app.use(errorHandler);
 
