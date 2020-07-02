@@ -5,17 +5,17 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Обязательное поле'],
-    minlength: [2, 'Минимальная длина 2 символа'],
-    maxlength: [30, 'Максимальная длина 30 символов'],
+    required: [true, 'Поле "name" должно быть заполнено'],
+    minlength: [2, 'Поле "name" должно содержать больше 2-х символов'],
+    maxlength: [30, 'Поле "name" должно содержать меньше 30-ти символов'],
   },
   email: {
     type: String,
-    required: [true, 'Обязательное поле'],
-    unique: [true, 'Данный email уже используется'],
+    required: [true, 'Поле "email" должно быть заполнено'],
+    unique: [true, 'Данный "email" уже используется'],
     validate: {
       validator: (value) => validator.isEmail(value),
-      message: 'Неверный формат email',
+      message: 'Поле "email" содержит недействительный адрес электронной почты',
     },
   },
   password: {

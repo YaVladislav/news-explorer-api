@@ -4,46 +4,46 @@ const validator = require('validator');
 const articleSchema = new mongoose.Schema({
   keyword: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "keyword" должно быть заполнено'],
   },
   title: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "title" должно быть заполнено'],
   },
   text: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "text" должно быть заполнено'],
   },
   date: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "date" должно быть заполнено'],
   },
   source: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "source" должно быть заполнено'],
   },
   link: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "link" должно быть заполнено'],
     validate: {
       validator: (value) => validator
         .isURL(value, { protocols: ['http', 'https', 'ftp'], require_tld: true, require_protocol: true }),
-      message: 'Неверный формат URL',
+      message: 'Поле "link" содержит недействительный url-адрес',
     },
   },
   image: {
     type: String,
-    required: [true, 'Обязательное поле'],
+    required: [true, 'Поле "image" должно быть заполнено'],
     validate: {
       validator: (value) => validator
         .isURL(value, { protocols: ['http', 'https', 'ftp'], require_tld: true, require_protocol: true }),
-      message: 'Неверный формат URL',
+      message: 'Поле "image" содержит недействительный url-адрес',
     },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: [true, 'Обязательное поле'],
+    required: true,
     select: false,
   },
 });

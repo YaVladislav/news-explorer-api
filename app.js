@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const errorHandler = require('./middlewares/error-handler');
+const errorCelebrate = require('./middlewares/error-celebrate');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -25,7 +28,8 @@ app.use(require('./routes'));
 
 app.use(errorLogger);
 
-app.use(require('./middlewares/error-handler'));
+app.use(errorCelebrate);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Приложение использует ${PORT} порт`);

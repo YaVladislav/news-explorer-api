@@ -35,7 +35,8 @@ const deleteArticles = (req, res, next) => {
   const owner = req.user._id;
   Article.findArticle(req.params.id, owner)
     .then((article) => {
-      res.json({ article });
+      // res.status(200).json({ article });
+      res.status(200).json({ message: 'Ресурс успешно удален' });
       article.remove();
     })
     .catch(next);
