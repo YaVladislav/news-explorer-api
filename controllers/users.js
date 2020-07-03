@@ -30,7 +30,7 @@ const createUser = (req, res, next) => {
     .then((user) => {
       const modifiedUser = JSON
         .stringify(user, (key, value) => ((key === 'password') ? undefined : value));
-      res.status(201).json({ data: JSON.parse(modifiedUser) });
+      res.status(201).json(JSON.parse(modifiedUser));
     })
     .catch(next);
 };

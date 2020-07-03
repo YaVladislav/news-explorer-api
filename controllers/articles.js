@@ -14,7 +14,11 @@ const createArticles = (req, res, next) => {
   Article.create({
     keyword, title, text, date, source, link, image, owner: req.user._id,
   })
-    .then((article) => res.status(200).json({ article }))
+    .then((article) => {
+      const modifiedArticle = JSON
+        .stringify(article, (key, value) => ((key === 'owner') ? undefined : value));
+      res.status(201).json(JSON.parse(modifiedArticle));
+    })
     .catch(next);
 };
 
