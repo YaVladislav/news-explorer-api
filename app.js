@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -16,6 +17,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
+const corsOptions = {
+  origin: '*',
+  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
+};
+
 mongoose.connect(DB_PATH, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -25,6 +35,8 @@ mongoose.connect(DB_PATH, {
 
 app.use(limiter);
 app.use(helmet());
+
+app.use('*', cors(corsOptions));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
