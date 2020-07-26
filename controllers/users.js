@@ -15,7 +15,7 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('token', `Bearer ${token}`, { httpOnly: true });
-      res.status(201).json({ message: 'Авторизация прошла успешно' });
+      res.status(201).json({ message: 'Авторизация прошла успешно', name: user.name });
     })
     .catch(next);
 };
