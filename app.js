@@ -18,7 +18,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:8080',
+  origin: ['http://localhost:8080', 'https://yavladislav.github.io/news-explorer-frontend'],
   methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
   preflightContinue: false,
   optionsSuccessStatus: 204,
