@@ -6,10 +6,12 @@ const { NotFoundError } = require('../constants');
 
 const {
   login,
+  logout,
   createUser,
 } = require('../controllers/users');
 
 router.post('/signin', validateAuthentication, login);
+router.post('/signout', logout);
 router.post('/signup', validateUserBody, createUser);
 
 router.use('/users', auth, require('./users'));

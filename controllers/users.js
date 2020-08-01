@@ -20,6 +20,11 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
+const logout = (req, res) => {
+  res.clearCookie('token');
+  res.status(201).json({ message: 'Выполнен выход' });
+};
+
 const createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
@@ -43,6 +48,7 @@ const userGet = (req, res, next) => {
 
 module.exports = {
   login,
+  logout,
   createUser,
   userGet,
 };
