@@ -20,9 +20,6 @@ const app = express();
 const corsOptions = {
   origin: ['https://yavladislav.github.io/news-explorer-frontend', 'http://localhost:8080'],
   methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
